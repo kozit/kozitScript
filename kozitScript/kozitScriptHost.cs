@@ -7,7 +7,6 @@ namespace kozitScript
     {
         public Dictionary<string, object> MEM = new Dictionary<string, object>();
 
-        List<Script> Scripts = new List<Script>();
 
         public object this[object ob, string Name]
         {
@@ -85,7 +84,7 @@ namespace kozitScript
             for (int i = 0; i < Code.Length; i++)
             {
                 string[] Tokens = getTokens(Code[i]);
-
+                //Srart if Else Endif Elseif
                 if (Tokens[0] == "if")
                 {
                     if (Tokens.Length == 2)
@@ -164,10 +163,16 @@ namespace kozitScript
                     }
 
                     i = ii;
+                    //Srart if Else Endif Elseif
+                }
+                else if (Tokens[0] == "Init")
+                {
+                    API temp = (API)MEM["API:" + Tokens[1]];
+                    temp.Interrupt(byte.Parse(Tokens[2]));
                 }
 
-
             }
+
 
 
         }
