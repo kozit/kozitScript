@@ -25,7 +25,7 @@ namespace kozitScript.Lib
             if (!Globals.isinit)
             {
                 //RegisterLib(new Lib.IOlib());
-                RegisterLib(new Lib.stdlib());
+                RegisterLib(new Lib._stdlib());
                 
                 //RegisterLib(new Lib.MathLib());
                 Globals.RegisterCommand(new Command("import", "inports a lib", new Command.command(ImportCosmos)));

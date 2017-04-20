@@ -217,35 +217,14 @@ namespace kozitScript
     }
 
 
-    public class Command
+    public abstract class Command
     {
 
-        public Command(string Command, command command, bool showinhelp = true)
-        {
-            this.showinhelp = showinhelp;
-            executec = command;
-            Name = Command;
-        }
+        public abstract void execute(kozitScript Script, List<string> args);
 
-        public Command(string Command, string Help, command command, bool showinhelp = true)
-        {
-            this.showinhelp = showinhelp;
-            this.Help = Help;
-            executec = command;
-            Name = Command;
-        }
-
-        public void execute(kozitScript Script, List<string> args)
-        {
-            executec(Script, args);
-        }
-
-        public bool showinhelp;
-        public string Help { get; set; }
-        public string Name { get; set; }
-        public command executec;
-        public delegate void command(kozitScript Script, List<string> args);
-
+        public abstract bool showinhelp { get; }
+        public abstract string Help { get; set; }
+        public abstract string Name { get; set; }
 
     }
 

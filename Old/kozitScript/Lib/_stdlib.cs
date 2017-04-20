@@ -4,7 +4,7 @@ using System.IO;
 
 namespace kozitScript.Lib
 {
-    public class stdlib : ILib
+    public class _stdlib : ILib
     {
 
 

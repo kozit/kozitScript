@@ -3,58 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript.win", "kozitScript.win\kozitScript.win.csproj", "{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript.win.updater", "kozitScript.win.updater\kozitScript.win.updater.csproj", "{AE62D31E-C26F-4F3A-BA12-827CB1B21260}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript", "kozitScript\kozitScript.csproj", "{570A430F-D0C1-46A0-BE49-39E482CE090B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript", "kozitScript\kozitScript.csproj", "{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Cosmos|Any CPU = Cosmos|Any CPU
-		Cosmos|x86 = Cosmos|x86
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Cosmos|Any CPU.ActiveCfg = Cosmos|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Cosmos|Any CPU.Build.0 = Cosmos|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Cosmos|x86.ActiveCfg = Cosmos|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Cosmos|x86.Build.0 = Cosmos|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Debug|x86.Build.0 = Debug|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Release|x86.ActiveCfg = Release|Any CPU
-		{76A66CE3-F7AA-4408-ABF8-823DFA4C5C72}.Release|x86.Build.0 = Release|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Cosmos|Any CPU.ActiveCfg = Release|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Cosmos|Any CPU.Build.0 = Release|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Cosmos|x86.ActiveCfg = Debug|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Cosmos|x86.Build.0 = Debug|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Debug|x86.Build.0 = Debug|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Release|x86.ActiveCfg = Release|Any CPU
-		{AE62D31E-C26F-4F3A-BA12-827CB1B21260}.Release|x86.Build.0 = Release|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Cosmos|Any CPU.ActiveCfg = Release|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Cosmos|Any CPU.Build.0 = Release|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Cosmos|x86.ActiveCfg = Debug|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Cosmos|x86.Build.0 = Debug|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Debug|x86.Build.0 = Debug|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Release|x86.ActiveCfg = Release|Any CPU
-		{570A430F-D0C1-46A0-BE49-39E482CE090B}.Release|x86.Build.0 = Release|Any CPU
+		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

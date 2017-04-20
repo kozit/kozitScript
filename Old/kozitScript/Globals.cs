@@ -42,18 +42,7 @@ namespace kozitScript
                 }
             }
         }
-
-        public static void overrideCommand(string Command, Command.command comm)
-        {
-            for (int i = 0; i < Commands.Count; i++)
-            {
-                if (Command.ToLower() == Commands[i].Name)
-                {
-                    Commands[i].executec = comm;
-                    break;
-                }
-            }
-        }
+        
 
     }
 }
