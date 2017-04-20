@@ -174,8 +174,10 @@ namespace kozitScript
             const char split = ' ';
             const char quote = '"';
             bool isinquotes = false;
+
             
             List<string> tokens = new List<string> { "" };
+
             foreach (char c in s)
             {
 
