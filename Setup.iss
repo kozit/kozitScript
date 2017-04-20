@@ -4,8 +4,8 @@
 #define MyAppName "kozitScript"
 #define MyAppVersion "0"
 #define MyAppPublisher "PunkSky"
-#define MyAppURL "http://www.github.com/zarlo/kozit/"
-#define MyAppExeName "kozitScript.win.exe"
+#define MyAppURL "https://github.com/kozit/kozitScript"
+#define MyAppExeName "KSRM.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -40,12 +40,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "kozitScript.win\bin\Debug\kozitScript.win.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "kozitScript.win\bin\Debug\Cosmos.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "kozitScript.win\bin\Debug\Cosmos.Debug.Kernel.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "kozitScript.win\bin\Debug\Cosmos.IL2CPU.Plugs.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "kozitScript.win\bin\Debug\kozitScript.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "kozitScript.win\bin\Debug\kozitScript.win.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "KSRM\bin\Debug\KSRM.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "KSRM\bin\Debug\kozitScript.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -58,8 +54,8 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 
 [Registry]
 
-; Regiter .xs Extension
+; Regiter .ks Extension
 Root: HKCR; Subkey: ".ks"; ValueType: string; ValueName: ""; ValueData: "kozitScript"; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "kozitScript"; ValueType: string; ValueName: ""; ValueData: "kozitScript source file"; Flags: uninsdeletekey
 ;Root: HKCR; Subkey: "kozitScript\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\kozitScript.win.exe,0"
-Root: HKCR; Subkey: "kozitScript\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\kozitScript.win.exe"" ""%1"""
+Root: HKCR; Subkey: "kozitScript\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\KSRM.exe"" ""%1"""
