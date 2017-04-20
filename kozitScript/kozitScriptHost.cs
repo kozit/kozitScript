@@ -19,61 +19,17 @@ namespace kozitScript
         }
 
 
-        public void Compile(string Path)
+        public void Run(string Path)
         {
-            string[] Script = System.IO.File.ReadAllText(Path).Split(';');
-            
 
-                string funcTemp = ""; 
+            for (int i = 0; i <11;i++)
+            {
+                MEM.Add("*" + i, null);
+            }
 
-                for (int i = 0; i < Script.Length; i++)
-                {
-
-                    if (Script[i].StartsWith("#include"))
-                    {
-                        Include(getTokens(Script[i])[1]);
-                    }
-
-                    if (Script[i].Trim(' ').StartsWith("Func"))
-                    {
-
-                        funcTemp = Script[i].Remove(0, 4).Trim(' ');
-                        MEM.Add("Func:" + funcTemp + ":Start", i);
-
-                    }
-
-
-                    if (Script[i].Trim(' ').StartsWith("End Func"))
-                    {
-
-                        MEM.Add("Func:" + funcTemp + ":End", i);
-
-                        List<string> r = new List<string>();
-                        if (MEM["Func:" + funcTemp + ":Start"] != null)
-                        {
-                            for (int ii = int.Parse(MEM["Func:" + funcTemp + ":Start"].ToString()); ii < int.Parse(MEM["Func:" + funcTemp + ":Start"].ToString() + 1); ii++)
-                            {
-
-                                r.Add(Script[ii]);
-
-                            }
-                        }
-
-                        MEM.Add("Func:" + funcTemp, r.ToArray());
-                        MEM.Remove("Func:" + funcTemp + ":End");
-                        MEM.Remove("Func:" + funcTemp + ":Start");
-                        funcTemp = "";
-
-                    }
-
-
-
-                }
-
-
-            MEM.Add("System:FL",1);
+            Include(Path);
             Parse("Main");
-
+            MEM = new Dictionary<string, object>();
         }
 
 
@@ -81,7 +37,7 @@ namespace kozitScript
         {
             string[] Code = (string[])MEM["Func:" + Func];
             MEM.Add("","");
-            for (int i = 0; i < Code.Length; i++)
+            for (int i = 1; i < Code.Length; i++)
             {
                 string[] Tokens = getTokens(Code[i]);
                 //Srart if Else Endif Elseif
@@ -168,7 +124,43 @@ namespace kozitScript
                 else if (Tokens[0] == "Init")
                 {
                     API temp = (API)MEM["API:" + Tokens[1]];
-                    temp.Interrupt(byte.Parse(Tokens[2]));
+                    MEM["*0"] = temp.Interrupt(byte.Parse(Tokens[2]), MEM);
+                }
+                else if (Tokens[0].StartsWith("$"))
+                {
+                    if (MEM[Tokens[1]] != null)
+                    {
+                        MEM[Tokens[1]] = Tokens[1];
+                    }
+                    else
+                    {
+                        MEM.Add(Tokens[1], Tokens[1]);
+                    }
+                }
+                else
+                {
+
+                    if (MEM[Tokens[0]] != null)
+                    {
+                        int a = 1;
+                        // why do i need to do this C# why
+                        string[] t = (string[])MEM[Tokens[0]];
+                        foreach (string I in t[0].Split(','))
+                        {
+                            if (MEM[I] != null)
+                            {
+                                MEM[I] = Tokens[a];
+                            }
+                            else
+                            {
+                                MEM.Add(I, Tokens[a]);
+                            }
+                            a++;
+                        }
+                        t = null;
+                        Parse(Tokens[0]);
+                    }
+
                 }
 
             }
@@ -244,7 +236,11 @@ namespace kozitScript
                     List<string> r = new List<string>();
                     if (MEM["Func:" + Func + ":Start"] != null)
                     {
-                        for (int ii = int.Parse(MEM["Func:" + Func + ":Start"].ToString()); ii < int.Parse(MEM["Func:" + Func + ":Start"].ToString() + 1); ii++)
+                        string args = getTokens(Temp[int.Parse((string)MEM["Func:" + Func + ":Start"])]).ToString().Remove(0,5 + Func.Length);
+                        
+
+                        r.Add( args );
+                        for (int ii = int.Parse((string)MEM["Func:" + Func + ":Start"]) + 1; ii < int.Parse(MEM["Func:" + Func + ":Start"].ToString() + 1); ii++)
                         {
 
                             r.Add(Temp[ii]);

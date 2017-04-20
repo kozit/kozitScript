@@ -9,7 +9,7 @@ namespace kozitScript
 
         public abstract string Name { get; }
 
-        public abstract void Interrupt(byte Init);
+        public abstract object Interrupt(byte Init, Dictionary<string, object> MEM);
 
     }
 }
