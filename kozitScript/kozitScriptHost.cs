@@ -15,7 +15,7 @@ namespace kozitScript
 
         public KozitScriptHost()
         {
-            
+            MEM.Add("API:System", new Lib.System());
         }
 
 

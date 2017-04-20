@@ -6,7 +6,7 @@ namespace kozitScript.Lib
 {
     class System : API
     {
-        public override string Name { get { return "Core"; } }
+        public override string Name { get { return "System"; } }
 
         public override object Interrupt(byte Init, Dictionary<string, object> MEM)
         {
