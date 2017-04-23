@@ -56,12 +56,172 @@ namespace kozitScript
 
         }
 
+        public string[] getTokens(string s)
+        {
+            const char split = ' ';
+            const char quote = '"';
+            bool isinquotes = false;
+
+            
+            List<string> tokens = new List<string> { "" };
+
+            foreach (char c in s)
+            {
+
+                if (c == quote) { isinquotes = !isinquotes; }
+                else if (c == split && isinquotes == false) { tokens.Add(""); }
+                else { tokens[tokens.Count - 1] += c; }
+
+            }
+
+            return tokens.ToArray();
+
+        }
+
+        public void Include(string Path)
+        {
+            string mPath = Path;
+            if (MEM.ContainsKey("System:Paths")) {
+                string[] Paths = (string[])MEM["System:Paths"];
+                if(Debug)
+                Console.WriteLine(":::");
+                for (int i = 0; i < Paths.Length; i++)
+                {
+                    
+                    if (System.IO.File.Exists(Paths[i] + Path))
+                    {
+                        if (Debug)
+                            Console.WriteLine(Paths[i] + Path + "|||");
+                        mPath = Paths[i] + Path;
+                        break;
+                    }
+                    else if (System.IO.File.Exists(Paths[i] + "\\" + Path))
+                    {
+                        if (Debug)
+                            Console.WriteLine(Paths[i] + Path + "|||");
+                        mPath = Paths[i] + "\\" + Path;
+                        break;
+                    }
+                }
+            }
+            string[] Temp = System.IO.File.ReadAllText(mPath).Split(';');
+            
+
+            string Func = "";
+            string NameSpace = "";
+            for (int i = 0; i < Temp.Length; i++)
+            {
+                string line = Temp[i].Trim(' ');
+                if (Debug)
+                    if(line != Environment.NewLine)
+                    Console.WriteLine(line);
+
+                if (line.StartsWith("#include"))
+                {
+                    if (Debug)
+                        Console.WriteLine("include");
+                    Include(getTokens(Temp[i])[1]);
+                }
+
+                else if (line.StartsWith("#$"))
+                {
+                    if (Debug)
+                        Console.WriteLine("Prevar");
+
+                    MEM.Add(getTokens(line.Remove(0, 1))[0], getTokens(line.Remove(0, 1))[1]);
+                }
+
+                else if (line.StartsWith("Namespace"))
+                {
+                    if (Debug)
+                        Console.WriteLine("NameSpace Start");
+
+                    NameSpace = line.Remove(0, 9).Trim(' ');
+                }
+
+                else if (line.StartsWith("End Namespace"))
+                {
+                    if (Debug)
+                        Console.WriteLine("NameSpace End");
+                    NameSpace = "";
+
+                }
+
+                else if (line.StartsWith("Func"))
+                {
+                    if (Debug)
+                    {
+                        Console.WriteLine("Func Start");
+                        Console.WriteLine(":" + line.Remove(0, 4).Trim(' ') + ":");
+                        Console.WriteLine(":|" + line.Remove(0, 4) + "|:");
+                    }
+                    Func = Temp[i].Remove(0, 4).Trim(' ');
+                    MEM.Add("Func:" + Func + ":Start", i);
+
+                }
+
+                else if (line.StartsWith("End Func"))
+                {
+                    if (Debug)
+                        Console.WriteLine("Func End");
+                    MEM.Add("Func:" + Func + ":End", i);
+
+                    List<string> r = new List<string>();
+
+                    if (MEM.ContainsKey(("Func:" + Func + ":Start")))
+                    {
+                        string args = getTokens(Temp[int.Parse((string)MEM["Func:" + Func + ":Start"])]).ToString().Remove(0, 5 + Func.Length);
+                        
+                        r.Add(args);
+                        r.Add("");
+                        for (int ii = int.Parse((string)MEM["Func:" + Func + ":Start"]) + 1; ii < int.Parse(MEM["Func:" + Func + ":Start"].ToString() + 1); ii++)
+                        {
+                            string line1 = Temp[ii].Trim(' ');
+                            if (!line1.StartsWith(":"))
+                            {
+                                r.Add(Temp[ii]);
+                            }
+
+                            else if (line1 == "")
+                            { }
+
+                            else if (line1.StartsWith("//"))
+                            { }
+
+                            else
+                            {
+                                r[1] += line1.Remove(0, 1) + ":" + ii + ";";
+                            }
+
+                        }
+                    }
+
+                    MEM.Add("Func:" + NameSpace + Func, r.ToArray());
+                    //MEM.Remove("Func:" + Func + ":End");
+                    //MEM.Remove("Func:" + Func + ":Start");
+                    Func = "";
+
+                    if (Debug)
+                    {
+                        Console.WriteLine("|||||||||");
+                        Console.WriteLine(Func);
+                        Console.WriteLine(NameSpace);
+                    }
+
+                }
+
+
+            }
+
+
+        }
+        
         internal void Parse(string Func)
         {
 
             string[] Code = (string[])MEM["Func:" + Func];
             string[] GOTO = Code[1].Split(':');
-             
+
             //MEM.Add("","");
             for (int i = 2; i < Code.Length; i++)
             {
@@ -251,151 +411,6 @@ namespace kozitScript
 
         }
 
-        public string[] getTokens(string s)
-        {
-            const char split = ' ';
-            const char quote = '"';
-            bool isinquotes = false;
-
-            
-            List<string> tokens = new List<string> { "" };
-
-            foreach (char c in s)
-            {
-
-                if (c == quote) { isinquotes = !isinquotes; }
-                else if (c == split && isinquotes == false) { tokens.Add(""); }
-                else { tokens[tokens.Count - 1] += c; }
-
-            }
-
-            return tokens.ToArray();
-
-        }
-
-        public void Include(string Path)
-        {
-            string mPath = Path;
-            if (MEM.ContainsKey("System:Paths")) {
-                string[] Paths = (string[])MEM["System:Paths"];
-                if(Debug)
-                Console.WriteLine(":::");
-                for (int i = 0; i < Paths.Length; i++)
-                {
-                    Console.WriteLine(Paths[i] + Path);
-                    if (System.IO.File.Exists(Paths[i] + Path))
-                    {
-                        if (Debug)
-                            Console.WriteLine(Paths[i] + Path + "|||");
-                        mPath = Paths[i] + Path;
-                        break;
-                    }
-                    else if (System.IO.File.Exists(Paths[i] + "\\" + Path))
-                    {
-                        if (Debug)
-                            Console.WriteLine(Paths[i] + Path + "|||");
-                        mPath = Paths[i] + "\\" + Path;
-                        break;
-                    }
-                }
-            }
-            string[] Temp = System.IO.File.ReadAllText(mPath).Split(';');
-            
-
-            string Func = "";
-            string NameSpace = "";
-            for (int i = 0; i < Temp.Length; i++)
-            {
-                string line = Temp[i].Trim(' ');
-                if (Debug)
-                    Console.WriteLine(line.Trim(' ') + ":;:");
-
-                if (line.StartsWith("#include"))
-                {
-                    Include(getTokens(Temp[i])[1]);
-                }
-
-                else if (line.StartsWith("#$"))
-                {
-                    MEM.Add(getTokens(line.Remove(0, 1))[0], getTokens(line.Remove(0, 1))[1]);
-                }
-
-                else if (line.StartsWith("Namespace"))
-                {
-
-                    NameSpace = line.Remove(0, 9).Trim(' ');
-                }
-
-                else if (line.StartsWith("End Namespace"))
-                {
-
-                    NameSpace = "";
-
-                }
-
-                else if (line.StartsWith("Func"))
-                {
-                    if (Debug)
-                    {
-                        Console.WriteLine(":" + line.Remove(0, 4).Trim(' ') + ":");
-                        Console.WriteLine(":|" + line.Remove(0, 4) + "|:");
-                    }
-                    Func = Temp[i].Remove(0, 4).Trim(' ');
-                    MEM.Add("Func:" + Func + ":Start", i);
-
-                }
-
-                else if (line.StartsWith("End Func"))
-                {
-
-                    MEM.Add("Func:" + Func + ":End", i);
-
-                    List<string> r = new List<string>();
-
-                    if (MEM.ContainsKey(("Func:" + Func + ":Start")))
-                    {
-                        string args = getTokens(Temp[int.Parse((string)MEM["Func:" + Func + ":Start"])]).ToString().Remove(0, 5 + Func.Length);
-                        
-                        r.Add(args);
-                        r.Add("");
-                        for (int ii = int.Parse((string)MEM["Func:" + Func + ":Start"]) + 1; ii < int.Parse(MEM["Func:" + Func + ":Start"].ToString() + 1); ii++)
-                        {
-
-                            if (!Temp[ii].StartsWith(":"))
-                            {
-                                r.Add(Temp[ii]);
-                            }
-
-                            else if (Temp[ii].StartsWith("//"))
-                            {}
-
-                            else
-                            {
-                                r[1] += Temp[ii].Remove(0, 1) + ":" + ii + ";";
-                            }
-
-                        }
-                    }
-
-                    MEM.Add("Func:" + NameSpace + Func, r.ToArray());
-                    //MEM.Remove("Func:" + Func + ":End");
-                    //MEM.Remove("Func:" + Func + ":Start");
-                    Func = "";
-
-                    if (Debug)
-                    {
-                        Console.WriteLine(";;;");
-                        Console.WriteLine(Func);
-                        Console.WriteLine(NameSpace);
-                    }
-
-                }
-
-
-            }
-
-
-        }
 
     }
 }
