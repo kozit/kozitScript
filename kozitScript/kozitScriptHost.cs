@@ -7,19 +7,38 @@ namespace kozitScript
     {
         public Dictionary<string, object> MEM = new Dictionary<string, object>();
 
+#if DEBUG
+        bool Debug = true;
+#else
+        bool Debug = fales;
+#endif
 
-        public object this[object ob, string Name]
+        public object this[string Name]
         {
-            set { MEM.Add( "Func:" + Name,value); }
+            set { if (MEM.ContainsKey(Name )) { MEM.Add(Name, value); } else { MEM[Name] = value; } }
+            get { if (MEM.ContainsKey(Name )) { return MEM[Name]; } else { return ""; } }
         }
 
-        public KozitScriptHost()
+        public KozitScriptHost(API[] Apis)
         {
-            MEM.Add("API:System", new Lib.System());
+            foreach (API Item in Apis)
+            {
+                MEM.Add("API:" + Item.Name,Item);
+            }
         }
 
+        public void Run(string Func)
+        {
+            Parse(Func);
+        }
 
-        public void Run(string Path)
+        public void RunFile(string Path)
+        {
+            LoadFile(Path);
+            Parse("Main");
+        }
+
+        public void LoadFile(string Path)
         {
 
             for (int i = 0; i <11;i++)
@@ -28,16 +47,23 @@ namespace kozitScript
             }
 
             Include(Path);
-            Parse("Main");
-            MEM = new Dictionary<string, object>();
+                        
         }
 
+        public void Compile(string Path)
+        {
+            Include(Path);
+
+        }
 
         internal void Parse(string Func)
         {
+
             string[] Code = (string[])MEM["Func:" + Func];
-            MEM.Add("","");
-            for (int i = 1; i < Code.Length; i++)
+            string[] GOTO = Code[1].Split(':');
+             
+            //MEM.Add("","");
+            for (int i = 2; i < Code.Length; i++)
             {
                 string[] Tokens = getTokens(Code[i]);
                 //Srart if Else Endif Elseif
@@ -47,11 +73,7 @@ namespace kozitScript
                     {
                         if (Tokens[1][1] == '!')
                         {
-                            if ((bool)MEM[Tokens[1].Remove(0, 2)] == false)
-                            {
-
-                            }
-                            else
+                            if ((bool)MEM[Tokens[1].Remove(0, 2)] == true)
                             {
                                 int ii = i;
                                 while (Code[ii] != "Else" | Code[ii] != "Elseif")
@@ -70,11 +92,7 @@ namespace kozitScript
                         else
                         {
 
-                            if ((bool)MEM[Tokens[1].Remove(0, 1)] == true)
-                            {
-
-                            }
-                            else
+                            if ((bool)MEM[Tokens[1].Remove(0, 1)] == false)
                             {
                                 int ii = i;
                                 while (Code[ii] != "Else" | Code[ii] != "Elseif")
@@ -96,6 +114,48 @@ namespace kozitScript
                     else if (Tokens.Length == 4)
                     {
 
+                        if (Tokens[2] == "==")
+                        {
+
+                            if (Tokens[1] != Tokens[3])
+                            {
+
+                                int ii = i;
+                                while (Code[ii] != "Else" | Code[ii] != "Elseif")
+                                {
+                                    ii++;
+                                }
+                                if (Code[ii] == "Elseif")
+                                {
+                                    ii--;
+                                }
+
+                                i = ii;
+
+                            }
+
+                        }
+                        else if (Tokens[2] == "!=")
+                        {
+
+                            if (Tokens[1] == Tokens[3])
+                            {
+
+                                int ii = i;
+                                while (Code[ii] != "Else" | Code[ii] != "Elseif")
+                                {
+                                    ii++;
+                                }
+                                if (Code[ii] == "Elseif")
+                                {
+                                    ii--;
+                                }
+
+                                i = ii;
+
+                            }
+
+                        }
 
 
                     }
@@ -105,7 +165,8 @@ namespace kozitScript
                     }
 
                 }
-                else if (Code[i] == "Else")
+
+                else if (Tokens[0] == "Else")
                 {
                     int ii = i;
                     while (Code[ii] != "Endif" | Code[ii] != "Elseif")
@@ -121,33 +182,54 @@ namespace kozitScript
                     i = ii;
                     //Srart if Else Endif Elseif
                 }
+
                 else if (Tokens[0] == "Init")
                 {
                     API temp = (API)MEM["API:" + Tokens[1]];
                     MEM["*0"] = temp.Interrupt(byte.Parse(Tokens[2]), MEM);
                 }
+
+                else if (Tokens[0] == "Return")
+                {
+                    MEM["*0"] = Tokens[1];
+                    break;
+                }
+
                 else if (Tokens[0].StartsWith("$"))
                 {
-                    if (MEM[Tokens[1]] != null)
+                    if (MEM.ContainsKey(Tokens[1]))
                     {
-                        MEM[Tokens[1]] = Tokens[1];
+                        MEM[Tokens[0]] = Tokens[1];
                     }
                     else
                     {
-                        MEM.Add(Tokens[1], Tokens[1]);
+                        MEM.Add(Tokens[0], Tokens[1]);
                     }
                 }
+
+                else if (Tokens[0].StartsWith("*"))
+                {
+                    MEM[Tokens[0]] = Tokens[1];
+                }
+
+                else if (Tokens[0] == "Goto")
+                {
+
+
+
+                }
+
                 else
                 {
 
-                    if (MEM[Tokens[0]] != null)
+                    if (MEM.ContainsKey(Tokens[0]))
                     {
                         int a = 1;
                         // why do i need to do this C# why
                         string[] t = (string[])MEM[Tokens[0]];
                         foreach (string I in t[0].Split(','))
                         {
-                            if (MEM[I] != null)
+                            if (MEM.ContainsKey(I))
                             {
                                 MEM[I] = Tokens[a];
                             }
@@ -191,69 +273,121 @@ namespace kozitScript
 
         }
 
-
         public void Include(string Path)
         {
-            string[] Temp = System.IO.File.ReadAllText(Path).Split(';');
+            string mPath = Path;
+            if (MEM.ContainsKey("System:Paths")) {
+                string[] Paths = (string[])MEM["System:Paths"];
+                if(Debug)
+                Console.WriteLine(":::");
+                for (int i = 0; i < Paths.Length; i++)
+                {
+                    Console.WriteLine(Paths[i] + Path);
+                    if (System.IO.File.Exists(Paths[i] + Path))
+                    {
+                        if (Debug)
+                            Console.WriteLine(Paths[i] + Path + "|||");
+                        mPath = Paths[i] + Path;
+                        break;
+                    }
+                    else if (System.IO.File.Exists(Paths[i] + "\\" + Path))
+                    {
+                        if (Debug)
+                            Console.WriteLine(Paths[i] + Path + "|||");
+                        mPath = Paths[i] + "\\" + Path;
+                        break;
+                    }
+                }
+            }
+            string[] Temp = System.IO.File.ReadAllText(mPath).Split(';');
             
 
             string Func = "";
             string NameSpace = "";
-            for (int i = 0; i != Temp.Length; i++)
+            for (int i = 0; i < Temp.Length; i++)
             {
+                string line = Temp[i].Trim(' ');
+                if (Debug)
+                    Console.WriteLine(line.Trim(' ') + ":;:");
 
-                if (Temp[i].StartsWith("#include"))
+                if (line.StartsWith("#include"))
                 {
                     Include(getTokens(Temp[i])[1]);
                 }
 
-                if (Temp[i].Trim(' ').StartsWith("Namespace"))
+                else if (line.StartsWith("#$"))
                 {
-
-                    NameSpace = Temp[i].Remove(0, 9).Trim(' ');
+                    MEM.Add(getTokens(line.Remove(0, 1))[0], getTokens(line.Remove(0, 1))[1]);
                 }
 
+                else if (line.StartsWith("Namespace"))
+                {
 
-                if (Temp[i].Trim(' ').StartsWith("End Namespace"))
+                    NameSpace = line.Remove(0, 9).Trim(' ');
+                }
+
+                else if (line.StartsWith("End Namespace"))
                 {
 
                     NameSpace = "";
 
                 }
 
-                if (Temp[i].Trim(' ').StartsWith("Func"))
+                else if (line.StartsWith("Func"))
                 {
-
+                    if (Debug)
+                    {
+                        Console.WriteLine(":" + line.Remove(0, 4).Trim(' ') + ":");
+                        Console.WriteLine(":|" + line.Remove(0, 4) + "|:");
+                    }
                     Func = Temp[i].Remove(0, 4).Trim(' ');
                     MEM.Add("Func:" + Func + ":Start", i);
 
                 }
 
-
-                if (Temp[i].Trim(' ').StartsWith("End Func"))
+                else if (line.StartsWith("End Func"))
                 {
 
                     MEM.Add("Func:" + Func + ":End", i);
 
                     List<string> r = new List<string>();
-                    if (MEM["Func:" + Func + ":Start"] != null)
-                    {
-                        string args = getTokens(Temp[int.Parse((string)MEM["Func:" + Func + ":Start"])]).ToString().Remove(0,5 + Func.Length);
-                        
 
-                        r.Add( args );
+                    if (MEM.ContainsKey(("Func:" + Func + ":Start")))
+                    {
+                        string args = getTokens(Temp[int.Parse((string)MEM["Func:" + Func + ":Start"])]).ToString().Remove(0, 5 + Func.Length);
+                        
+                        r.Add(args);
+                        r.Add("");
                         for (int ii = int.Parse((string)MEM["Func:" + Func + ":Start"]) + 1; ii < int.Parse(MEM["Func:" + Func + ":Start"].ToString() + 1); ii++)
                         {
 
-                            r.Add(Temp[ii]);
+                            if (!Temp[ii].StartsWith(":"))
+                            {
+                                r.Add(Temp[ii]);
+                            }
+
+                            else if (Temp[ii].StartsWith("//"))
+                            {}
+
+                            else
+                            {
+                                r[1] += Temp[ii].Remove(0, 1) + ":" + ii + ";";
+                            }
 
                         }
                     }
-                    
+
                     MEM.Add("Func:" + NameSpace + Func, r.ToArray());
-                    MEM.Remove("Func:" + Func + ":End");
-                    MEM.Remove("Func:" + Func + ":Start");
+                    //MEM.Remove("Func:" + Func + ":End");
+                    //MEM.Remove("Func:" + Func + ":Start");
                     Func = "";
+
+                    if (Debug)
+                    {
+                        Console.WriteLine(";;;");
+                        Console.WriteLine(Func);
+                        Console.WriteLine(NameSpace);
+                    }
 
                 }
 

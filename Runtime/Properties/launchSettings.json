@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Runtime": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\zarlo\\Desktop\\DEV\\kozit\\kozitScript\\Runtime\\bin\\Debug\\netcoreapp1.0\\Test.ks",
+      "environmentVariables": {
+        "Key": "Value"
+      }
+    }
+  }
+}

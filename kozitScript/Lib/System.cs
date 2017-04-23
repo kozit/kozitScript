@@ -4,7 +4,7 @@ using System.Text;
 
 namespace kozitScript.Lib
 {
-    class System : API
+    public class System : API
     {
         public override string Name { get { return "System"; } }
 

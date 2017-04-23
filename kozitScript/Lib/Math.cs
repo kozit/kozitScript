@@ -1,16 +1,23 @@
-﻿using System;
+﻿using s = System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace kozitScript.Lib
 {
-    class Math : API
+    public class Math : API
     {
-        public override string Name => throw new NotImplementedException();
+        public override string Name { get { return "Math"; } }
 
         public override object Interrupt(byte Init, Dictionary<string, object> MEM)
         {
-            throw new NotImplementedException();
+            switch (Init)
+            {
+                //Parse
+                case 0:
+                    return int.Parse((string)MEM["*1"]);
+                                                                                                                  
+            }
+            return "";
         }
     }
 }
