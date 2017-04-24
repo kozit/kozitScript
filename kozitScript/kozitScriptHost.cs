@@ -25,6 +25,10 @@ namespace kozitScript
             {
                 MEM.Add("API:" + Item.Name,Item);
             }
+            for (int i = 0; i < 11; i++)
+            {
+                MEM.Add("*" + i, null);
+            }
         }
 
         public void Run(string Func)
@@ -40,11 +44,6 @@ namespace kozitScript
 
         public void LoadFile(string Path)
         {
-
-            for (int i = 0; i <11;i++)
-            {
-                MEM.Add("*" + i, null);
-            }
 
             Include(Path);
                         
@@ -218,9 +217,17 @@ namespace kozitScript
         
         internal void Parse(string Func)
         {
+            string[] Code = { ""};
+            try
+            {
+                Code = (string[])MEM["Func:" + Func];
+            }
+            catch
+            {
+                new Exceptions.ParseException(Func,-1,"Func not Found");
+            }
 
-            string[] Code = (string[])MEM["Func:" + Func];
-            string[] GOTO = Code[1].Split(':');
+            string[] GOTO = Code[1].Split(';');
 
             //MEM.Add("","");
             for (int i = 2; i < Code.Length; i++)
@@ -321,7 +328,7 @@ namespace kozitScript
                     }
                     else
                     {
-
+                        new Exceptions.ParseException(Func, i, "IF Tokens Length wrong");
                     }
 
                 }
@@ -340,8 +347,9 @@ namespace kozitScript
                     }
 
                     i = ii;
-                    //Srart if Else Endif Elseif
+
                 }
+                //Srart if Else Endif Elseif
 
                 else if (Tokens[0] == "Init")
                 {
@@ -374,8 +382,19 @@ namespace kozitScript
 
                 else if (Tokens[0] == "Goto")
                 {
+                    bool isNumeric = int.TryParse(Tokens[1], out i);
+                    if(!isNumeric)
+                    for (int ii = 0; ii < GOTO.Length; ii++)
+                    {
+                        if (GOTO[ii].Split(':')[0] == Tokens[1])
+                        {
 
+                                isNumeric = int.TryParse(GOTO[ii].Split(':')[1], out i);
+                                if (!isNumeric)
+                                    new Exceptions.ParseException(Func, i, "Token 2 invalid");
 
+                        }
+                    }
 
                 }
 
@@ -400,7 +419,17 @@ namespace kozitScript
                             a++;
                         }
                         t = null;
-                        Parse(Tokens[0]);
+                        try
+                        {
+                            Parse(Tokens[0]);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else
+                    {
+                        new Exceptions.ParseException(Func, i, "GOTO");
                     }
 
                 }

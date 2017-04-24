@@ -6,7 +6,6 @@
     <ApplicationIcon />
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
-    <RuntimeIdentifiers>win10-x64;osx.10.11-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
 
@@ -21,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Run.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Test.ks">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
