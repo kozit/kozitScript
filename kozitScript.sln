@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript", "kozitScript\kozitScript.csproj", "{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runtime", "Runtime\Runtime.csproj", "{118F83C5-C68A-482D-9953-BD027D04AA72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript", "kozitScript\kozitScript.csproj", "{2B0166E4-0C25-433D-8354-94523BC3E67A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F274B3E-1F83-462A-9C87-9D3F7FA75FE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{118F83C5-C68A-482D-9953-BD027D04AA72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{118F83C5-C68A-482D-9953-BD027D04AA72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{118F83C5-C68A-482D-9953-BD027D04AA72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{118F83C5-C68A-482D-9953-BD027D04AA72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B0166E4-0C25-433D-8354-94523BC3E67A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B0166E4-0C25-433D-8354-94523BC3E67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B0166E4-0C25-433D-8354-94523BC3E67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B0166E4-0C25-433D-8354-94523BC3E67A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57A58835-1B44-4610-A9A9-DA82EBA335E4}
 	EndGlobalSection
 EndGlobal

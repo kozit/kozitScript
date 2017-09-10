@@ -6,10 +6,7 @@ namespace kozitScript
 {
     public abstract class API
     {
-
-        public abstract string Name { get; }
-
-        public abstract object Interrupt(byte Init, Dictionary<string, object> MEM);
-
+        public byte[] ID = new byte[1] { 0x00 };
+        public abstract byte[] Interrupt(byte Current, byte[] Data);
     }
 }

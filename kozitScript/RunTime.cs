@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace kozitScript
 {
-    public class Debug
+    public class RunTime
     {
 
-
-        public static void Log(string msg)
+        public static void Run(string Path)
         {
 
-            
+             File.ReadAllBytes(Path);
 
         }
 
