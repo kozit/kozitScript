@@ -27,7 +27,9 @@ The first 12 bytes of memory are positions that are used by the executor to stor
 
 | Register Name | Description | Memory Position |
 | ------------- | ------------- | ------------- |
-| Program Counter | The position in the program of the next command to be processed relative to the start of the program. | 0x01,0x02,0x03,0x04 (4 Bytes) | Return Pointer | Points to the next return position in the program of the next return. | 0x05,0x06,0x07,0x08 (4 Bytes) | Conditional Result | The result of the conditional test if it has just been completed. 0x00 (False) 0x01 (True) 0x02 (Not Set) | 0x09 (1 Byte) |
+| Program Counter | The position in the program of the next command to be processed relative to the start of the program. | 0x01,0x02,0x03,0x04 (4 Bytes)
+| Return Pointer | Points to the next return position in the program of the next return. | 0x05,0x06,0x07,0x08 (4 Bytes)
+| Conditional Result | The result of the conditional test if it has just been completed. 0x00 (False) 0x01 (True) 0x02 (Not Set) | 0x09 (1 Byte) |
 
 
 # Commands
