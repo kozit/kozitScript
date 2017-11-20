@@ -166,7 +166,7 @@ Parameters: none
 
 # Arithmetic Operations
 ## Add
-Bytecode: 0x40
+Bytecode: 0x50
 
 Mnemonic: ADD
 
@@ -175,7 +175,7 @@ Description: Adds SOURCE to DESTINATION and puts the result in DESTINATION (DEST
 Parameters: source_is_memory_position (1B, 0x01 for true, 0x00 for false), source (4B, in memory location), destination_is_memory_position, (1B, 0x01 for true, 0x00 for false), destination (4B, memloc or absolute value)
 
 ## Subtract
-Bytecode: 0x41
+Bytecode: 0x51
 
 Mnemonic: SUB
 
@@ -185,7 +185,7 @@ Parameters: source_is_memory_position (1B, 0x01 for true, 0x00 for false), sourc
 
 
 ## Multiply
-Bytecode: 0x42
+Bytecode: 0x52
 
 Mnemonic: MUL
 
@@ -194,7 +194,7 @@ Description: Multiplys SOURCE from DESTINATION and puts the result in DESTINATIO
 Parameters: source_is_memory_position (1B, 0x01 for true, 0x00 for false), source (4B, in memory location), destination_is_memory_position, (1B, 0x01 for true, 0x00 for false), destination (4B, memloc or absolute value)
 
 ## Divide
-Bytecode: 0x43
+Bytecode: 0x53
 
 Mnemonic: DIV
 
