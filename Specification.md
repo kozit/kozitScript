@@ -27,8 +27,7 @@ The first 12 bytes of memory are positions that are used by the executor to stor
 
 | Register Name | Description | Memory Position |
 | ------------- | ------------- | ------------- |
-| Program Counter | The position in the program of the next command to be processed relative to the start of the program. | 0x01,0x02,0x03,0x04 (4 Bytes) | Return Pointer | Points to the next return position in the program of the next return. | 0x05,0x06,0x07,0x08 (4 Bytes)
-| Conditional Result | The result of the conditional test if it has just been completed. 0x00 (False) 0x01 (True) 0x02 (Not Set) | 0x09 (1 Byte) |
+| Program Counter | The position in the program of the next command to be processed relative to the start of the program. | 0x01,0x02,0x03,0x04 (4 Bytes) | Return Pointer | Points to the next return position in the program of the next return. | 0x05,0x06,0x07,0x08 (4 Bytes) | Conditional Result | The result of the conditional test if it has just been completed. 0x00 (False) 0x01 (True) 0x02 (Not Set) | 0x09 (1 Byte) |
 
 
 # Commands
@@ -53,7 +52,7 @@ Description: Stores content in memory at the next free destination of that lengt
 Parameters: length (2B, in B) 0x00 content (MUST BE AS LONG AS SPECIFIED IN length) 0x00 location (4B, in memory position)
 
 ## Read
-Bytecode: 0x10
+Bytecode: 0xFF
 
 Mnemonic: [p1,p2,p3,p4] converts into a read command
 
@@ -62,7 +61,7 @@ Description: Reads content in memory (can only be used in place of an absolute v
 Parameters: location (4B, in memory position)
 
 ## Read Length
-Bytecode: 0x11
+Bytecode: 0xFE
 
 Mnemonic: (p1,p2,p3,p4) converts into a read length
 
