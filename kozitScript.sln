@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript", "src\kozitScript\kozitScript.csproj", "{38378513-3478-48FB-9730-2D7CA49F57BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kozitScript", "src\kozitScript\kozitScript.csproj", "{38378513-3478-48FB-9730-2D7CA49F57BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript.VSIX", "src\kozitScript.VSIX\kozitScript.VSIX.csproj", "{7782FA66-741A-4E9E-B499-F66185FE094D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kozitScript.StandAloneBase", "src\StandAlone\kozitScript.StandAloneBase\kozitScript.StandAloneBase.csproj", "{486DAE7E-0616-45A0-A3C4-95CE16343CB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StandAlone", "StandAlone", "{B38BF7B8-7F9D-401D-A4D6-A29515564241}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,20 @@ Global
 		{38378513-3478-48FB-9730-2D7CA49F57BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38378513-3478-48FB-9730-2D7CA49F57BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38378513-3478-48FB-9730-2D7CA49F57BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7782FA66-741A-4E9E-B499-F66185FE094D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7782FA66-741A-4E9E-B499-F66185FE094D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7782FA66-741A-4E9E-B499-F66185FE094D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7782FA66-741A-4E9E-B499-F66185FE094D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{486DAE7E-0616-45A0-A3C4-95CE16343CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486DAE7E-0616-45A0-A3C4-95CE16343CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486DAE7E-0616-45A0-A3C4-95CE16343CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486DAE7E-0616-45A0-A3C4-95CE16343CB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{486DAE7E-0616-45A0-A3C4-95CE16343CB0} = {B38BF7B8-7F9D-401D-A4D6-A29515564241}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D6CE011-8EE3-4C1A-8C3D-35F0326B3990}

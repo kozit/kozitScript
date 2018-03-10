@@ -6,7 +6,6 @@ namespace kozitScript
 {
     public class ParseTree : Data
     {
-        public Function Main;
         public List<Function> Functions;
     }
 
@@ -14,7 +13,7 @@ namespace kozitScript
     public class Function : Data
     {
         public string Name;
-        public Args Arguments;
+        public List<string> Arguments;
         public List<Instruction> Instructions;
     }
 
@@ -22,6 +21,7 @@ namespace kozitScript
 
     public class Instruction : Data
     {
+        public int CodeSize;
         public Variable Var;
         public Operator Op;
         public Execute Func;
@@ -29,32 +29,38 @@ namespace kozitScript
     // A variable has a name and value
     public class Variable : Data
     {
+        public VariableType VariableType = VariableType.Global;
         public bool ignore = false;
         public bool isNum = false;
-        public bool isConst = false;
-        public bool isReg = false;
+        public bool isString = false;
         public bool isList = false;
         public string Name;
-        public List<string> List;
+        public object value;
     }
     // An operator has a type
     public class Operator : Data
     {
         public string Type;
+        public List<string> Arguments;
     }
     // A Execute (function call) has a namespace ID, function id and arguments.
     public class Execute : Data
     {
         public string Function;
-        public Args Arguments;
-    }
-    // The arguments have variables.
-    public class Args : Data
-    {
-        public List<Variable> Arguments;
+        public List<string> Arguments;
     }
 
     public class Data
     {
     }
+
+    public enum VariableType
+    {
+
+        Global,
+        Globalconstant,
+        Functions
+
+    }
+
 }
